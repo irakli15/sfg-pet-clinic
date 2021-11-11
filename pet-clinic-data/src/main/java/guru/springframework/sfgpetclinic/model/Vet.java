@@ -16,11 +16,11 @@ import java.util.Set;
 public class Vet extends Person {
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<Specialty> specialty = new HashSet<>();
+	private Set<Specialty> specialities = new HashSet<>();
 
 	@Builder
-	public Vet(Long id, String firstName, String lastName, Set<Specialty> specialty) {
+	public Vet(Long id, String firstName, String lastName, Set<Specialty> specialities) {
 		super(id, firstName, lastName);
-		this.specialty = specialty;
+		this.specialities = specialities;
 	}
 }
