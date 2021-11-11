@@ -4,6 +4,7 @@ import guru.springframework.sfgpetclinic.services.OwnerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("/owners")
@@ -21,4 +22,11 @@ public class OwnerController {
 		model.addAttribute("owners", ownerService.findAll());
 		return "owners/index";
 	}
+
+	@GetMapping({"/{ownerId}"})
+	public String ownerDetails(Model model, @PathVariable int ownerId) {
+		model.addAttribute("owner", ownerService.findById((long)ownerId));
+		return "owners/ownerDetails";
+	}
+
 }

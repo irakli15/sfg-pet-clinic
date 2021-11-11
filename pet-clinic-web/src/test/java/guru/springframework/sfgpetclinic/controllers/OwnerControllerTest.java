@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -51,5 +52,16 @@ class OwnerControllerTest {
 				.andExpect(view().name("owners/index"))
 				.andExpect(model().attribute("owners", Matchers.hasSize(owners.size())));
 
+	}
+
+	@Test
+	void ownerDetails() throws Exception {
+		Owner owner = Owner.builder().id(1L).build();
+		when(ownerService.findById(anyLong())).thenReturn(owner);
+
+		mockMvc.perform(get("/owners/1"))
+				.andExpect(status().isOk())
+				.andExpect(view().name("owners/ownerDetails"))
+				.andExpect(model().attribute("owner", Matchers.hasProperty("id", Matchers.is(1L))));
 	}
 }
