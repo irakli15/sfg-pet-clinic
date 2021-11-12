@@ -1,8 +1,10 @@
 package guru.springframework.sfgpetclinic.bootstrap;
 
 import guru.springframework.sfgpetclinic.model.Owner;
+import guru.springframework.sfgpetclinic.model.PetType;
 import guru.springframework.sfgpetclinic.model.Vet;
 import guru.springframework.sfgpetclinic.services.OwnerService;
+import guru.springframework.sfgpetclinic.services.PetTypeService;
 import guru.springframework.sfgpetclinic.services.VetService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -14,10 +16,12 @@ public class DataLoader implements CommandLineRunner {
 
 	private final OwnerService ownerService;
 	private final VetService vetService;
+	private final PetTypeService petTypeService;
 
-	public DataLoader(OwnerService ownerService, VetService vetService) {
+	public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService) {
 		this.ownerService = ownerService;
 		this.vetService = vetService;
+		this.petTypeService = petTypeService;
 	}
 
 	@Override
@@ -46,6 +50,11 @@ public class DataLoader implements CommandLineRunner {
 		vetService.save(vet2);
 
 		System.out.println("loaded vets...");
+
+		petTypeService.save(PetType.builder().id(1L).name("Dog").build());
+		petTypeService.save(PetType.builder().id(2L).name("Cat").build());
+
+		System.out.println("loaded pet types...");
 
 	}
 }

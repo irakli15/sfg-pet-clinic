@@ -9,6 +9,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 @Getter
@@ -30,6 +31,22 @@ public class Owner extends Person {
 		this.address = address;
 		this.city = city;
 		this.telephone = telephone;
-		this.pets = pets;
+		if (pets != null) {
+			this.pets = pets;
+		}
+	}
+
+	public Pet getPet(String name, boolean ignoreNew) {
+		Iterator<Pet> petsIterator = pets.iterator();
+		while (petsIterator.hasNext()) {
+			Pet nextPet = petsIterator.next();
+			if (ignoreNew && nextPet.getId() == 0) {
+				continue;
+			}
+			if (nextPet.getName().equals(name)) {
+				return nextPet;
+			}
+		}
+		return null;
 	}
 }
